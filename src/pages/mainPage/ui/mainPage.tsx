@@ -13,36 +13,39 @@ export const MainPage = () => {
   console.log(weather, forecast);
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center ">
-      <Header
-        district={address?.region_2depth_name ?? ''}
-        neighborhood={address?.region_3depth_name ?? ''}
-        village={address?.region_4depth_name ?? ''}
-      />
-      <main className="w-screen">
-        {/* 검색 영역 */}
-        <section className="bg-amber-500 h-12">Search</section>
-        {/* 현재 날씨 영역 */}
-        <section className="bg-pink-400 h-70">
-          Current Weather
-          {/* <div>
-            <WeatherIcon
-              icon={weather?.weather[0].icon}
-              description={weather?.weather[0].description}
-            />
-          </div>
-          <h1 className="-mt-10">{Math.floor(weather?.main.temp)}°</h1>
-          <div className="flex gap-2">
-            <span>최고 {weather?.main.temp_max}°</span>
-            <span>|</span>
-            <span>최저 {weather?.main.temp_min}°</span>
-          </div> */}
+    <main className="w-screen min-h-screen grid grid-cols-1 gap-6 px-4 py-6 lg:grid-cols-12 lg:gap-8 lg:px-10">
+      {/* TopBar: lg에서 같은 줄 */}
+      <div className="grid grid-cols-1 gap-4 lg:col-span-12 lg:grid-cols-12 lg:items-center">
+        {/* 헤더(로고/위치 등) */}
+        <header className="lg:col-span-3">
+          <div>헤더</div>
+          {/* <Header /> */}
+        </header>
+
+        {/* 검색바 */}
+        <section className="lg:col-span-6">
+          <div>검색바</div>
+          {/* <SearchBar /> */}
         </section>
-        {/* 시간대 별 기온 영역 */}
-        <section className="bg-sky-400 h-50">Hourly Weather</section>
-        {/* 즐겨찾기 영역 */}
-        <section className="bg-green-400 h-40">favorite</section>
-      </main>
-    </div>
+      </div>
+
+      {/* 현재 날씨 */}
+      <section className="lg:col-span-5">
+        <div>현재날씨</div>
+        {/* <CurrentWeather /> */}
+      </section>
+
+      {/* 시간대별 날씨 */}
+      <section className="lg:col-span-7">
+        <div>시간대별날씨</div>
+        {/* <HourlyWeather /> */}
+      </section>
+
+      {/* 즐겨찾기 */}
+      <section className="lg:col-span-12">
+        <div>즐겨찾기</div>
+        {/* <FavoriteLocations /> */}
+      </section>
+    </main>
   );
 };
