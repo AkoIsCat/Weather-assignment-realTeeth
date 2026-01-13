@@ -14,5 +14,5 @@ export const useForecast = (coords: Coords) => {
     enabled: !!coords,
   });
 
-  console.log(data);
+  return data;
 };
