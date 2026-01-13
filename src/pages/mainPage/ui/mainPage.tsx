@@ -5,6 +5,7 @@ import { Card } from '../../../shared';
 import { SearchBar } from '../../../features/search';
 import { Logo } from '../../../shared';
 import { CurrentWeatherInfo } from '../../../widgets/CurrentWeatherInfo/ui/CurrentWeatherInfo';
+import { FavoriteList } from '../../../widgets/FavoriteList';
 
 export const MainPage = () => {
   const coords = useCoords();
@@ -51,8 +52,11 @@ export const MainPage = () => {
 
       {/* 즐겨찾기 */}
       <section className="lg:col-span-12 px-4 pb-4">
-        <Card>
-          <div className="min-h-50">즐겨찾기</div>
+        <Card width="favoriteItem">
+          <p className="pb-4">즐겨찾기</p>
+          <div className="flex flex-wrap  gap-4">
+            <FavoriteList />
+          </div>
         </Card>
       </section>
     </main>
