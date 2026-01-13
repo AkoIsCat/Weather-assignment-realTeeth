@@ -13,13 +13,15 @@ export const Card = ({ children, width = 'mobile' }: CardProps) => {
 
     // 즐겨찾기 지역 카드
     favoriteItem: 'w-full',
+    // 즐겨찾기 카드 아이템
+    favoriteCard: 'w-[calc(50%-0.5rem)]  lg:w-[calc(16%-0.5rem)]',
 
     // 시간대별 기온 카드
     hourlyItem: 'w-[112px] lg:w-[120px] min-w-0',
 
     // 최고 / 최저 기온 카드
     tempStatItem:
-      'w-[125px] lg:w-[140px] h-[30px] min-w-0 flex justify-center items-center gap-3',
+      'w-[125px] lg:w-[calc(50%-0.5rem)] h-[30px] min-w-0 flex justify-center items-center gap-3',
   };
 
   return (
