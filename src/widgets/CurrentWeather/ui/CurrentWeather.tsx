@@ -19,7 +19,7 @@ export const CurrentWeather = ({
         </div>
         <CurrentTmp curTmp={curTmp} />
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 lg:w-full lg:gap-7">
         <TodayTmp type="max" minTmp={maxTmp} />
         <TodayTmp type="min" minTmp={minTmp} />
       </div>
