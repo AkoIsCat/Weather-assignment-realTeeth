@@ -1,0 +1,8 @@
+import { create } from 'zustand';
+import type { WeatherState, WeatherAction } from './types';
+
+export const useWeatherStore = create<WeatherState & WeatherAction>((set) => ({
+  currentLocation: '',
+  setCurrentLocation: (location: string) =>
+    set(() => ({ currentLocation: location })),
+}));
