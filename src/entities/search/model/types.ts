@@ -5,3 +5,8 @@ export type WeatherState = {
 export type WeatherAction = {
   setCurrentLocation: (location: string) => void;
 };
+
+export type SuggestionItemType = {
+  location: string;
+  onClick: (location: string) => void;
+};
