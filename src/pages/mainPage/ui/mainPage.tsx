@@ -8,13 +8,34 @@ import { CurrentWeatherInfo } from '../../../widgets/CurrentWeatherInfo/ui/Curre
 import { FavoriteList } from '../../../widgets/FavoriteList';
 import { HourlyForecastSection } from '../../../widgets/HourlyForecast/ui/HourlyForecastSection';
 
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useWeatherStore } from '../../../entities/search';
+
 export const MainPage = () => {
   const coords = useCoords();
   const address = useAddress(coords);
   const weather = useWeather(coords);
   const forecast = useForecast(coords);
 
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const location = searchParams.get('location');
+  const { currentLocation, setCurrentLocation } = useWeatherStore();
+
+  useEffect(() => {
+    if (!location && address?.address_name) {
+      navigate(`/?location=${address.address_name}`);
+      setCurrentLocation(address.address_name);
+    }
+
+    if (location) {
+      setCurrentLocation(location);
+    }
+  }, [location, navigate, address, setCurrentLocation]);
+
   console.log(weather, forecast, address);
+  console.log(currentLocation);
 
   return (
     <main className="w-screen min-h-screen flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-0 lg:items-start box-border bg-[#F7F7FA]">
