@@ -8,7 +8,7 @@ type Props = {
 
 export const HourlyForecastList = ({ data }: { data: Props[] }) => {
   return (
-    <div className="flex overflow-x-auto gap-5 lg:gap-10 pb-2 scrollbar-hide px-6 pb-6">
+    <div className="flex overflow-x-auto gap-5 lg:gap-10 scrollbar-hide px-6 pb-6">
       {data.map((item) => (
         <HourlyForecast
           key={item.time}

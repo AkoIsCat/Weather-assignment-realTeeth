@@ -36,7 +36,7 @@ const dummy = [
 
 export const HourlyForecastSection = () => {
   return (
-    <section className="lg:col-span-7 px-4">
+    <section className="lg:col-span-7 px-4 lg:pr-10">
       <Card width="hourlyDesktop">
         <div className="px-6 pb-4 pt-6">시간대 별 날씨</div>
         <HourlyForecastList data={dummy} />

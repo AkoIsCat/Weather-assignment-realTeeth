@@ -8,7 +8,7 @@ export const CurrentWeatherInfo = ({
   weather,
 }: CurrentWeatherInfoType) => {
   return (
-    <section className="lg:col-span-5 px-4">
+    <section className="lg:col-span-5 px-4 lg:px-10">
       <Card>
         <CurrentLocation
           district={address.district ?? ''}
