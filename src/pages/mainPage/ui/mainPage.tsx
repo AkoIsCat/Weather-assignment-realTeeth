@@ -17,16 +17,16 @@ export const MainPage = () => {
   console.log(weather, forecast, address);
 
   return (
-    <main className="w-screen min-h-screen flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-10 lg:items-start box-border">
+    <main className="w-screen min-h-screen flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-0 lg:items-start box-border bg-[#F7F7FA]">
       {/* 상단 영역 */}
       {/* 모바일에서는 세로 배치, 데스크탑에서는 가로 배치 */}
-      <div className="flex flex-col gap-2 lg:col-span-12 lg:grid lg:grid-cols-12 lg:items-center">
-        <header className="lg:col-span-3 px-4 pt-3">
+      <div className="flex flex-col gap-2 lg:col-span-12 lg:grid lg:grid-cols-12 lg:items-center lg:border-b lg:border-[#E9E9E9] lg:pb-6 bg-[#FFFFFF]">
+        <header className="lg:col-span-3 px-4 pt-3 lg:px-10">
           <Logo />
         </header>
 
         {/* 검색바 */}
-        <section className="border-y border-gray-100 py-3 lg:col-span-6 lg:border-none lg:py-0 lg:pt-4">
+        <section className="border-y border-[#E9E9E9] py-3 lg:col-span-6 lg:border-none lg:py-0 lg:pt-4">
           <SearchBar />
         </section>
       </div>
@@ -48,7 +48,7 @@ export const MainPage = () => {
       <HourlyForecastSection />
 
       {/* 즐겨찾기 */}
-      <section className="lg:col-span-12 px-4 pb-4">
+      <section className="lg:col-span-12 px-4 pb-4 lg:px-10">
         <Card width="favoriteItem">
           <p className="pb-4">즐겨찾기</p>
           <div className="flex flex-wrap gap-4">
