@@ -26,7 +26,7 @@ export const MainPage = () => {
         </header>
 
         {/* 검색바 */}
-        <section className="border-y border-[#E9E9E9] py-3 lg:col-span-6 lg:border-none lg:py-0 lg:pt-4">
+        <section className="border-y border-[#E9E9E9] py-3 lg:col-span-6 lg:border-none lg:py-0 lg:pt-4 isolate z-50">
           <SearchBar />
         </section>
       </div>
