@@ -5,7 +5,10 @@ import type { CurrentWeatherInfoType } from '../model/types';
 
 export const CurrentWeatherInfo = ({
   address,
-  weather,
+  weatherIcon,
+  curTmp,
+  minTmp,
+  maxTmp
 }: CurrentWeatherInfoType) => {
   return (
     <section className="lg:col-span-5 px-4 lg:px-10">
@@ -17,12 +20,12 @@ export const CurrentWeatherInfo = ({
         />
         <CurrentWeather
           weatherIcon={{
-            icon: weather.icon,
-            description: weather.description,
+            icon: weatherIcon.icon,
+            description: weatherIcon.description,
           }}
-          curTmp={6}
-          minTmp={-10}
-          maxTmp={10}
+          curTmp={curTmp}
+          minTmp={minTmp}
+          maxTmp={maxTmp}
         />
       </Card>
     </section>
