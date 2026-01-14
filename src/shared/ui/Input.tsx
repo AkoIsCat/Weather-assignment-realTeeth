@@ -1,29 +1,25 @@
-export const Input = () => {
+import type { InputType } from '../model/types';
+
+export const Input = ({ value, onChange, isValidSearch }: InputType) => {
   return (
     <input
       type="text"
-      className=" w-full
-    h-12 lg:h-14
-
-    rounded-3xl
-    px-5 pl-12
-
-    bg-white/70
-    backdrop-blur-md
-
-    border border-black/5
-    ring-1 ring-white/40
-
-    shadow-[0_12px_40px_rgba(15,23,42,0.08),0_2px_8px_rgba(15,23,42,0.06)]
-
-    text-sm lg:text-base
-    text-slate-800
-    placeholder:text-slate-400
-
-    outline-none
-
-    transition"
+      className={[
+        'w-full h-12 lg:h-14',
+        'px-5 pl-12',
+        'text-sm lg:text-base text-slate-800 placeholder:text-slate-400',
+        'outline-none transition',
+        'bg-white',
+        // 테두리
+        'border border-black/5 ring-1 ring-white/40',
+        // 드롭다운 열리면 아래 모서리 끊기
+        isValidSearch
+          ? 'rounded-t-3xl rounded-b-none border-b-0'
+          : 'rounded-3xl',
+      ].join(' ')}
       placeholder="지역을 검색하세요..."
+      value={value}
+      onChange={(e) => onChange(e)}
     />
   );
 };
