@@ -10,7 +10,7 @@ import { HourlyForecastSection } from '../../../widgets/HourlyForecast/ui/Hourly
 
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useWeatherStore } from '../../../entities/search';
+import { useWeatherStore } from '../../../entities/weather';
 
 export const MainPage = () => {
   const coords = useCoords();
@@ -22,6 +22,8 @@ export const MainPage = () => {
   const [searchParams] = useSearchParams();
   const location = searchParams.get('location');
   const { currentLocation, setCurrentLocation } = useWeatherStore();
+
+  const sliceLocation = currentLocation.split(' ');
 
   useEffect(() => {
     if (!location && address?.address_name) {
@@ -35,7 +37,7 @@ export const MainPage = () => {
   }, [location, navigate, address, setCurrentLocation]);
 
   console.log(weather, forecast, address);
-  console.log(currentLocation);
+  console.log(currentLocation, sliceLocation, location);
 
   return (
     <main className="w-screen min-h-screen flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-0 lg:items-start box-border bg-[#F7F7FA]">
@@ -59,9 +61,9 @@ export const MainPage = () => {
           description: weather?.weather[0]?.description,
         }}
         address={{
-          district: address?.region_2depth_name ?? '',
-          neighborhood: address?.region_3depth_name ?? '',
-          village: address?.region_4depth_name ?? '',
+          district: sliceLocation[1] ?? '',
+          neighborhood: sliceLocation[2] ?? '',
+          village: sliceLocation[3] ?? '',
         }}
       />
 
