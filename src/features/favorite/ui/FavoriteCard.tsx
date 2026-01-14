@@ -1,6 +1,7 @@
 import { WeatherIcon } from '../../../shared';
-import { CurrentTmp, TodayTmp } from '../../../entities/weather';
+import { CurrentTmp } from '../../../entities/weather';
 import { Card } from '../../../shared';
+import { useNavigate } from 'react-router-dom';
 
 // 임시 타입. 나중에 실제 데이터에 맞춰서 바꿀것.
 type PropsType = {
@@ -11,9 +12,16 @@ type PropsType = {
 };
 
 export const FavoriteCard = ({ city, curTmp, minTmp, maxTmp }: PropsType) => {
+  const navigate = useNavigate();
+
   return (
     <Card width="favoriteCard">
-      <div className="flex">
+      <div
+        className="flex"
+        onClick={() => {
+          navigate(`/?location=${city}`);
+        }}
+      >
         <div>
           <p>{city}</p>
           <CurrentTmp curTmp={curTmp} />
