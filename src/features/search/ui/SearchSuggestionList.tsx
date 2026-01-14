@@ -1,6 +1,16 @@
 import { SearchSuggestionItem } from '../../../entities/search';
+import { useWeatherStore } from '../../../entities/weather';
+import { useNavigate } from 'react-router-dom';
 
 export const SearchSuggestionList = ({ data }: { data: string[] }) => {
+  const { setCurrentLocation } = useWeatherStore();
+  const navigate = useNavigate();
+
+  const onClickItem = (location: string) => {
+    setCurrentLocation(location);
+    navigate(`/?location=${location}`);
+  };
+
   return (
     <ul
       className="
@@ -12,11 +22,20 @@ export const SearchSuggestionList = ({ data }: { data: string[] }) => {
     z-50
     overflow-y-auto
     max-h-96
+    rounded-3xl
   "
     >
       {data.length > 0 &&
-        data.map((item) => <SearchSuggestionItem key={item} location={item} />)}
-      {data.length === 0 && <SearchSuggestionItem location={''} />}
+        data.map((item) => (
+          <SearchSuggestionItem
+            key={item}
+            location={item}
+            onClick={onClickItem}
+          />
+        ))}
+      {data.length === 0 && (
+        <SearchSuggestionItem location={''} onClick={() => {}} />
+      )}
     </ul>
   );
 };
