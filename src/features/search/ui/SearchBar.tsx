@@ -25,7 +25,7 @@ export const SearchBar = () => {
     // 전역 document에 이벤트 리스너 등록
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      // 컴포넌트 언마운트 시 리스너 제거 
+      // 컴포넌트 언마운트 시 리스너 제거
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
@@ -44,7 +44,7 @@ export const SearchBar = () => {
         />
         {isValidSearch && isOpen && (
           <div className="absolute left-0 right-0 top-full z-20">
-            <SearchSuggestionList data={filterLocation} />
+            <SearchSuggestionList data={filterLocation} setIsOpen={setIsOpen} setSearchValue={setSearchValue} />
           </div>
         )}
       </div>

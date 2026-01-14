@@ -1,14 +1,21 @@
 import { SearchSuggestionItem } from '../../../entities/search';
 import { useWeatherStore } from '../../../entities/weather';
 import { useNavigate } from 'react-router-dom';
+import type { SearchSuggestionListType } from '../model/types';
 
-export const SearchSuggestionList = ({ data }: { data: string[] }) => {
+export const SearchSuggestionList = ({
+  data,
+  setIsOpen,
+  setSearchValue,
+}: SearchSuggestionListType) => {
   const { setCurrentLocation } = useWeatherStore();
   const navigate = useNavigate();
 
   const onClickItem = (location: string) => {
     setCurrentLocation(location);
     navigate(`/?location=${location}`);
+    setIsOpen(false);
+    setSearchValue('');
   };
 
   return (
