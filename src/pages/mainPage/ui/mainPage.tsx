@@ -6,6 +6,7 @@ import { SearchBar } from '../../../features/search';
 import { Logo } from '../../../shared';
 import { CurrentWeatherInfo } from '../../../widgets/CurrentWeatherInfo/ui/CurrentWeatherInfo';
 import { FavoriteList } from '../../../widgets/FavoriteList';
+import { HourlyForecastSection } from '../../../widgets/HourlyForecast/ui/HourlyForecastSection';
 
 export const MainPage = () => {
   const coords = useCoords();
@@ -44,17 +45,13 @@ export const MainPage = () => {
       />
 
       {/* 시간대별 날씨 */}
-      <section className="lg:col-span-7 px-4">
-        <Card>
-          <div className="min-h-50">시간대별날씨</div>
-        </Card>
-      </section>
+      <HourlyForecastSection />
 
       {/* 즐겨찾기 */}
       <section className="lg:col-span-12 px-4 pb-4">
         <Card width="favoriteItem">
           <p className="pb-4">즐겨찾기</p>
-          <div className="flex flex-wrap  gap-4">
+          <div className="flex flex-wrap gap-4">
             <FavoriteList />
           </div>
         </Card>
