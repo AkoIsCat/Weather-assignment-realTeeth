@@ -1,6 +1,12 @@
 import { useCoords } from '../../../entities/coords';
 import { useAddress } from '../../../entities/address';
-import { useForecast, useWeather } from '../../../entities/weather';
+import {
+  useForecast,
+  useWeather,
+  type WeatherData,
+} from '../../../entities/weather';
+import { formatToKST, filterWeatherData } from '../../../entities/weather';
+
 import { Card } from '../../../shared';
 import { SearchBar } from '../../../features/search';
 import { Logo } from '../../../shared';
@@ -37,7 +43,19 @@ export const MainPage = () => {
   }, [location, navigate, address, setCurrentLocation]);
 
   console.log(weather, forecast, address);
-  console.log(currentLocation, sliceLocation, location);
+
+  const filtered = forecast && filterWeatherData(forecast.list);
+  console.log('filter', filtered);
+  const result =
+    filtered &&
+    filtered.map((item: WeatherData) => ({
+      days: formatToKST(item.dt).split('.').slice(1, 3).join('/').trim(),
+      time: formatToKST(item.dt).split('.').slice(3).join('').trim(),
+      temp: item.main.temp,
+      weatherIcon: item.weather[0].icon,
+      weatherDescription: item.weather[0].description,
+    }));
+  console.log('result', result);
 
   return (
     <main className="w-screen min-h-screen flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-0 lg:items-start box-border bg-[#F7F7FA]">
@@ -56,10 +74,13 @@ export const MainPage = () => {
 
       {/* 현재 날씨 */}
       <CurrentWeatherInfo
-        weather={{
+        weatherIcon={{
           icon: weather?.weather[0]?.icon,
           description: weather?.weather[0]?.description,
         }}
+        curTmp={Math.floor(weather?.main.temp)}
+        minTmp={-1}
+        maxTmp={10}
         address={{
           district: sliceLocation[1] ?? '',
           neighborhood: sliceLocation[2] ?? '',
