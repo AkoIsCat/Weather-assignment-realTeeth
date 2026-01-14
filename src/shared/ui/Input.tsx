@@ -1,6 +1,10 @@
 import type { InputType } from '../model/types';
 
-export const Input = ({ value, onChange, isValidSearch }: InputType) => {
+export const Input = ({
+  value,
+  onChange,
+  onKeyDown,
+}: InputType) => {
   return (
     <input
       type="text"
@@ -12,14 +16,12 @@ export const Input = ({ value, onChange, isValidSearch }: InputType) => {
         'bg-white',
         // 테두리
         'border border-black/5 ring-1 ring-white/40',
-        // 드롭다운 열리면 아래 모서리 끊기
-        isValidSearch
-          ? 'rounded-t-3xl rounded-b-none border-b-0'
-          : 'rounded-3xl',
+        'rounded-3xl',
       ].join(' ')}
       placeholder="지역을 검색하세요..."
       value={value}
       onChange={(e) => onChange(e)}
+      onKeyDown={(e) => onKeyDown(e)}
     />
   );
 };

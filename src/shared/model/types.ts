@@ -24,12 +24,13 @@ export type WeatherIconType = {
 
 export type InputType = {
   value: string;
-  isValidSearch: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 export interface SearchInputType {
   value: string;
   setValue: React.Dispatch<SetStateAction<string>>;
+  setIsOpen: React.Dispatch<SetStateAction<boolean>>;
   isValidSearch: boolean;
 }
