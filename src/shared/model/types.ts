@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react';
+import type { PropsWithChildren, SetStateAction } from 'react';
 
 export type CardWidth =
   | 'mobile' // 모바일 전체폭 카드
@@ -21,3 +21,15 @@ export type WeatherIconType = {
   description: string;
   icon: string;
 };
+
+export type InputType = {
+  value: string;
+  isValidSearch: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export interface SearchInputType {
+  value: string;
+  setValue: React.Dispatch<SetStateAction<string>>;
+  isValidSearch: boolean;
+}
