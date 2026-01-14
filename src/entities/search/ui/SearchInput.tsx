@@ -6,7 +6,7 @@ import type { SearchInputType } from '../../../shared/model/types';
 export const SearchInput = ({
   value,
   setValue,
-  isValidSearch,
+  setIsOpen,
 }: SearchInputType) => {
   // 내부 로컬 상태. 사용자의 타이핑을 지연 없이 즉시 반영
   const [localValue, setLocalValue] = useState(value);
@@ -24,6 +24,7 @@ export const SearchInput = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextValue = e.target.value;
     setLocalValue(nextValue); // UI는 즉시 업데이트
+    setIsOpen(() => (nextValue.length !== 0 ? true : false));
     debouncedSetValue(nextValue); // 필터링 로직은 0.3초 뒤에 실행
   };
 
@@ -35,7 +36,12 @@ export const SearchInput = ({
     <Input
       value={localValue}
       onChange={handleChange}
-      isValidSearch={isValidSearch}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') {
+          setIsOpen(false);
+          setValue('');
+        }
+      }}
     />
   );
 };
