@@ -10,8 +10,11 @@ export type CardWidth =
   | 'tempStatItem' // 최고/최저 기온 아이템
   | 'favoriteCard'; // 즐겨찾기 카드 아이템
 
+export type CardShadow = 'hourlyItem' | 'default';
+
 export type CardProps = PropsWithChildren<{
   width?: CardWidth;
+  shadow?: 'hourlyItem' | 'default';
 }>;
 
 export type WeatherIconType = {
