@@ -14,3 +14,16 @@ export type TodayTmpType = {
 export type CurrentTmpType = {
   curTmp: number;
 };
+
+export type WeatherData = {
+  dt: number;
+  dt_txt: string;
+  main: {
+    temp: number;
+  };
+  weather: {
+    icon: string;
+    description: string;
+  }[];
+  // ... 기타 필드
+};

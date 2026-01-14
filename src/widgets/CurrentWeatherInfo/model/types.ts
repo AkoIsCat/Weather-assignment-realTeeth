@@ -3,5 +3,8 @@ import type { WeatherIconType } from '../../../shared';
 
 export type CurrentWeatherInfoType = {
   address: CurrentLocationProps;
-  weather: WeatherIconType;
+  weatherIcon: WeatherIconType;
+  curTmp: number;
+  minTmp: number;
+  maxTmp: number;
 };
