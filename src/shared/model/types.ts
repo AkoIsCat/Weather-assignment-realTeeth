@@ -20,6 +20,7 @@ export type CardProps = PropsWithChildren<{
 export type WeatherIconType = {
   description: string;
   icon: string;
+  width: 'hourly' | 'favorite' | 'current';
 };
 
 export type InputType = {
