@@ -1,73 +1,71 @@
-# React + TypeScript + Vite
+# 🌦️ Weather Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+사용자의 현재 위치를 기반으로 실시간 날씨와 상세 예보를 제공하는 반응형 웹 애플리케이션입니다.
 
-Currently, two official plugins are available:
+## 🛠 사용 기술 스택
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Frontend
 
-## React Compiler
+- **Framework**: React 18, Vite
+- **State Management**: Zustand (전역 상태), TanStack Query (서버 상태)
+- **Styling**: Tailwind CSS
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Architecture
 
-## Expanding the ESLint configuration
+- **Feature-Sliced Design (FSD)**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### API
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **OpenWeatherMap (One Call 3.0)**: 실시간 날씨 및 예보 데이터
+- **Kakao Maps API**: 행정동 주소 변환 및 검색 서비스
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ✨ 구현 기능 설명
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 📍 위치 기반 실시간 날씨 조회
+
+- **Geolocation API**를 활용해 앱 첫 진입 시 사용자의 현재 위치를 감지하고, 해당 지역의 날씨 정보를 제공합니다.
+- 현재 기온, 당일 **최저/최고 기온**, **시간대별 예보**를 함께 확인할 수 있습니다.
+- 위치 권한을 허용하지 않거나 위치 정보를 불러오지 못한 경우에도 서비스를 이용할 수 있도록 **임의 지역으로 초기값을 설정**했습니다.
+
+### 🔍 지역 검색 및 자동완성
+
+- **카카오맵 API**를 연동하여 대한민국 전 지역을 대상으로 한 장소 검색 기능을 제공합니다.
+- 시/군/구/동 단위에 관계없이 자유롭게 검색할 수 있으며, 입력한 키워드와 매칭되는 장소 리스트를 **자동완성 형태로 표시**합니다.
+- 사용자는 리스트에서 원하는 장소를 선택하여 해당 지역의 날씨 정보를 조회할 수 있습니다.
+- 날씨 정보가 제공되지 않는 지역의 경우, 안내 메시지를 통해 상태를 명확히 전달합니다.
+
+### ⭐ 즐겨찾기 및 별칭 관리
+
+- 자주 확인하는 지역을 **즐겨찾기에 추가하거나 삭제**할 수 있습니다.
+- 즐겨찾기는 **최대 6개까지 저장 가능**하며, 카드 UI 형태로 표시됩니다.
+- 각 지역에는 사용자가 원하는 **별칭을 수정**할 수 있어 개인화된 관리가 가능합니다.
+- 즐겨찾기 카드에는 **현재 날씨와 당일 최저/최고 기온**이 표시되며,  
+  카드를 클릭하면 해당 지역의 **시간대별 예보가 포함된 상세 화면**으로 이동합니다.
+
+### 📱 반응형 UI
+
+- 모바일과 데스크톱 환경을 모두 고려한 **반응형 레이아웃**을 구현했습니다.
+- 화면 크기에 따라 레이아웃과 UI 요소가 자연스럽게 재배치되어 다양한 디바이스에서도 일관된 사용 경험을 제공합니다.
+
+## 🔧 기술적 의사결정 및 이유 (Technical Decisions)
+
+## 🚀 프로젝트 실행 방법 (Getting Started)
+
+### 1. 환경 변수 설정
+
+프로젝트 루트 디렉토리에 `.env` 파일을 생성하고 아래의 키를 설정합니다.
+
+```env
+VITE_OPENWEATHER_API_KEY=your_openweather_api_key // openWeatherMap API KEY
+VITE_KAKAO_MAP_API_KEY=your_kakao_map_api_key // Kakao Maps API KEY
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. 의존성 설치 및 실행
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```
+# 의존성 패키지 설치
+npm install
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 로컬 개발 서버 실행
+npm run dev
 ```
