@@ -11,8 +11,8 @@ export const Card = ({
     mobile: 'w-full min-w-0 p-5 lg:p-6',
 
     // 데스크탑: 12컬럼 그리드 기준 (4/8/12)
-    currentDesktop: 'w-full lg:col-span-4 min-w-0 p-5 lg:p-6',
-    hourlyDesktop: 'w-full lg:col-span-8 min-w-0 p-0 lg:p-0',
+    currentDesktop: 'w-full lg:col-span-4 min-w-0 p-5 lg:p-6 lg:min-h-80',
+    hourlyDesktop: 'w-full lg:col-span-8 min-w-0 p-0 lg:p-0 lg:min-h-80',
     favoriteDesktop: 'w-full lg:col-span-12 min-w-0 p-5 lg:p-6',
 
     // 즐겨찾기 지역 카드
