@@ -1,5 +1,5 @@
 import { useCoords } from '../../../entities/coords';
-import { useAddress } from '../../../entities/address';
+import { useAddress, useAddressToCoords } from '../../../entities/address';
 import { useWeather } from '../../../entities/weather';
 
 import { Card } from '../../../shared';
@@ -16,12 +16,18 @@ import { useWeatherStore } from '../../../entities/weather';
 export const MainPage = () => {
   const coords = useCoords();
   const address = useAddress(coords);
-  const weather = useWeather(coords);
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const location = searchParams.get('location');
   const { currentLocation, setCurrentLocation } = useWeatherStore();
+  const coordsData = useAddressToCoords(location || '');
+
+  const weather = useWeather(
+    coordsData
+      ? [+coordsData?.documents[0].y, +coordsData?.documents[0].x]
+      : coords
+  );
 
   const sliceLocation = currentLocation.split(' ');
 
@@ -37,10 +43,9 @@ export const MainPage = () => {
   }, [location, navigate, address, setCurrentLocation]);
 
   const dailyTemp = {
-    minTemp: Math.floor(weather?.daily[0].temp.min),
-    maxTemp: Math.floor(weather?.daily[0].temp.max),
+    minTmp: Math.floor(weather?.daily[0].temp.min),
+    maxTmp: Math.floor(weather?.daily[0].temp.max),
   };
-  console.log(weather, address, dailyTemp);
 
   return (
     <main className="w-screen min-h-screen flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-0 lg:items-start box-border bg-[#F7F7FA]">
@@ -65,8 +70,9 @@ export const MainPage = () => {
           width: 'current',
         }}
         curTmp={Math.floor(weather?.current.temp)}
-        minTmp={dailyTemp.minTemp}
-        maxTmp={dailyTemp.maxTemp}
+        minTmp={dailyTemp.minTmp}
+        maxTmp={dailyTemp.maxTmp}
+        currentLocation={currentLocation}
         address={{
           district: sliceLocation[1] ?? '',
           neighborhood: sliceLocation[2] ?? '',
@@ -80,7 +86,7 @@ export const MainPage = () => {
       {/* 즐겨찾기 */}
       <section className="lg:col-span-12 px-4 pb-4 lg:px-10">
         <Card width="favoriteItem">
-          <p className="pb-4">즐겨찾기</p>
+          <p className="pb-4 text-xl">즐겨찾기</p>
           <div className="flex flex-wrap gap-4">
             <FavoriteList />
           </div>
