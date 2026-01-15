@@ -24,7 +24,7 @@ export const SearchInput = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextValue = e.target.value;
     setLocalValue(nextValue); // UI는 즉시 업데이트
-    setIsOpen(() => (nextValue.length !== 0 ? true : false));
+    setIsOpen(nextValue.length > 0);
     debouncedSetValue(nextValue); // 필터링 로직은 0.3초 뒤에 실행
   };
 
