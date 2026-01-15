@@ -10,7 +10,7 @@ export type { WeatherData } from './model/types';
 // ./weather/ui
 export { TodayTmp } from './ui/TodayTmp';
 export { CurrentTmp } from './ui/CurrentTmp';
+export { HourlyForecast } from './ui/HourlyForecast';
 
 // ./weather/lib
-export { filterWeatherData } from './lib/filterWeatherData';
-export { formatToKST } from './lib/formatToKST';
+export { formatWeatherDateTime } from './lib/formatWeatherDateTime';
