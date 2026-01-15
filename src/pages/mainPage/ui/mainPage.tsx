@@ -7,7 +7,7 @@ import { SearchBar } from '../../../features/search';
 import { Logo } from '../../../shared';
 import { CurrentWeatherInfo } from '../../../widgets/CurrentWeatherInfo/ui/CurrentWeatherInfo';
 import { HourlyForecastSection } from '../../../widgets/HourlyForecast/ui/HourlyForecastSection';
-import { FavoriteList } from '../../../widgets/FavoriteList';
+import { FavoriteSection } from '../../../widgets/FavoriteList';
 
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -93,14 +93,7 @@ export const MainPage = () => {
       <HourlyForecastSection data={weather?.hourly} />
 
       {/* 즐겨찾기 */}
-      <section className="lg:col-span-12 px-4 pb-4 lg:px-10">
-        <Card width="favoriteItem">
-          <p className="pb-4 text-xl">즐겨찾기</p>
-          <div className="flex flex-wrap gap-4">
-            <FavoriteList />
-          </div>
-        </Card>
-      </section>
+      <FavoriteSection />
     </main>
   );
 };
