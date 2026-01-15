@@ -20,8 +20,9 @@ import { useEffect } from 'react';
 import { useWeatherStore } from '../../../entities/weather';
 
 export const MainPage = () => {
-  const coords = useCoords();
-  const { address, isAddressError } = useAddress(coords);
+  const { coords, coordsResult } = useCoords();
+  const address = useAddress(coords);
+  console.log(coords, coordsResult);
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -65,7 +66,7 @@ export const MainPage = () => {
           <SearchBar />
         </section>
       </div>
-      {isAddressError && (
+      {coordsResult?.status === 'unavailable' && (
         <div className="w-125 lg:ml-162.5">
           <Card width="favoriteItem">
             <p>해당 장소의 정보가 제공되지 않습니다.</p>
@@ -73,7 +74,7 @@ export const MainPage = () => {
         </div>
       )}
       {/* 현재 날씨 */}
-      {!isAddressError && (
+      {coordsResult?.status !== 'unavailable' && (
         <>
           {!weatherDetail ? (
             <CurrentWeatherInfoSkeleton />
