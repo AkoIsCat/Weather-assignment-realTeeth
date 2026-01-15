@@ -23,14 +23,6 @@ export const MainPage = () => {
   const { currentLocation, setCurrentLocation } = useWeatherStore();
   const coordsData = useAddressToCoords(location || '');
 
-  const weather = useWeather(
-    coordsData
-      ? [+coordsData?.documents[0].y, +coordsData?.documents[0].x]
-      : coords
-  );
-
-  const sliceLocation = currentLocation.split(' ');
-
   useEffect(() => {
     if (!location && address?.address_name) {
       navigate(`/?location=${address.address_name}`);
@@ -41,6 +33,21 @@ export const MainPage = () => {
       setCurrentLocation(location);
     }
   }, [location, navigate, address, setCurrentLocation]);
+
+  const lat = coordsData ? +coordsData?.documents[0].y : coords?.[0] ?? 0;
+  const lon = coordsData ? +coordsData?.documents[0].x : coords?.[1] ?? 0;
+
+  const weather = useWeather(lat, lon);
+
+  if (!weather) {
+    return (
+      <Card>
+        <p>해당 장소의 정보가 제공되지 않습니다.</p>
+      </Card>
+    );
+  }
+
+  const sliceLocation = currentLocation.split(' ');
 
   const dailyTemp = {
     minTmp: Math.floor(weather?.daily[0].temp.min),
@@ -78,6 +85,8 @@ export const MainPage = () => {
           neighborhood: sliceLocation[2] ?? '',
           village: sliceLocation[3] ?? '',
         }}
+        lat={coordsData ? +coordsData?.documents[0].y : coords?.[0] ?? 0}
+        lon={coordsData ? +coordsData?.documents[0].x : coords?.[1] ?? 0}
       />
 
       {/* 시간대별 날씨 */}
