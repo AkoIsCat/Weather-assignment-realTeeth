@@ -4,6 +4,7 @@ import { Card } from '../../../shared';
 import { PencilIcon } from '../../../shared';
 import type { FavoriteStateType } from '../model/types';
 import { useFavoriteStore } from '../model/favoriteStore';
+import { useWeather } from '../../../entities/weather';
 
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -11,16 +12,19 @@ import { useState } from 'react';
 export const FavoriteCard = ({
   location,
   alias,
-  curTmp,
-  minTmp,
-  maxTmp,
-  icon,
-  description,
+  lat,
+  lon,
 }: FavoriteStateType) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [newAlias, setNewAlias] = useState(alias);
   const navigate = useNavigate();
   const { updateLocationName } = useFavoriteStore();
+  const weather = useWeather(lat, lon);
+
+  const dailyTemp = {
+    minTmp: Math.floor(weather?.daily[0].temp.min),
+    maxTmp: Math.floor(weather?.daily[0].temp.max),
+  };
 
   // 편집 시작
   const onClickEdit = (e: React.MouseEvent) => {
@@ -40,6 +44,7 @@ export const FavoriteCard = ({
         className="flex justify-between"
         onClick={() => {
           navigate(`/?location=${location}`);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
       >
         <div className="flex flex-col gap-3 lg:gap-0">
@@ -61,13 +66,17 @@ export const FavoriteCard = ({
               </>
             )}
           </div>
-          <CurrentTmp curTmp={curTmp} />
+          <CurrentTmp curTmp={Math.floor(weather?.current.temp)} />
         </div>
-        <WeatherIcon icon={icon} description={description} width="favorite" />
+        <WeatherIcon
+          icon={weather?.current.weather[0]?.icon}
+          description={weather?.current.weather[0]?.description}
+          width="favorite"
+        />
       </div>
       <div className="flex gap-2 text-xs">
-        <span>최고 {maxTmp}° |</span>
-        <span>최저 {minTmp}°</span>
+        <span>최고 {dailyTemp.maxTmp}° |</span>
+        <span>최저 {dailyTemp.minTmp}°</span>
       </div>
     </Card>
   );
