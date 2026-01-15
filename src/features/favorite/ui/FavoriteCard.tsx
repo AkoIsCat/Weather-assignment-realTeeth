@@ -4,7 +4,7 @@ import { Card } from '../../../shared';
 import { PencilIcon } from '../../../shared';
 import type { FavoriteStateType } from '../model/types';
 import { useFavoriteStore } from '../model/favoriteStore';
-import { useWeather } from '../../../entities/weather';
+import { useWeather, useWeatherDetail } from '../../../entities/weather';
 
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -20,11 +20,7 @@ export const FavoriteCard = ({
   const navigate = useNavigate();
   const { updateLocationName } = useFavoriteStore();
   const weather = useWeather(lat, lon);
-
-  const dailyTemp = {
-    minTmp: Math.floor(weather?.daily[0].temp.min),
-    maxTmp: Math.floor(weather?.daily[0].temp.max),
-  };
+  const weatherDetail = useWeatherDetail(weather);
 
   // 편집 시작
   const onClickEdit = (e: React.MouseEvent) => {
@@ -75,8 +71,8 @@ export const FavoriteCard = ({
         />
       </div>
       <div className="flex gap-2 text-xs">
-        <span>최고 {dailyTemp.maxTmp}° |</span>
-        <span>최저 {dailyTemp.minTmp}°</span>
+        <span>최고 {weatherDetail?.maxTmp}° |</span>
+        <span>최저 {weatherDetail?.minTmp}°</span>
       </div>
     </Card>
   );
