@@ -14,3 +14,6 @@ export { default as PencilIcon } from './asset/pencil.svg?react';
 
 // ./types
 export type { WeatherIconType } from './model/types';
+
+// ./model
+export { useHorizontalScroll } from './model/useHorizontalScroll';
