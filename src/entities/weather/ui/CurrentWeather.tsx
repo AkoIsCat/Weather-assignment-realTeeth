@@ -10,7 +10,7 @@ export const CurrentWeather = ({
 }: CurrentWeatherType) => {
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="flex items-center">
+      <div className="w-2/3 flex justify-around items-center my-12">
         <div>
           <WeatherIcon
             icon={weatherIcon.icon}
