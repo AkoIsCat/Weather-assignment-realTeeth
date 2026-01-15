@@ -9,7 +9,6 @@ export const ToggleFavoriteButton = ({
 }) => {
   const { favoriteLocationList, addLocation, deleteLocation } =
     useFavoriteStore();
-  console.log(favoriteLocationList);
 
   const isFavorite = favoriteLocationList.some(
     (item) => item.location === favoriteWeatherData.location
