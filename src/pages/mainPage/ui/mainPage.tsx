@@ -39,7 +39,6 @@ export const MainPage = () => {
       setCurrentLocation(location);
     }
   }, [location, navigate, address, setCurrentLocation]);
-  console.log(address, isAddressError);
 
   const lat = coordsData?.documents?.[0]
     ? +coordsData.documents[0].y
