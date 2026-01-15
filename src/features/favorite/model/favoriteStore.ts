@@ -19,7 +19,9 @@ export const useFavoriteStore = create<FavoriteState & FavoriteActios>()(
         set((state) => ({
           favoriteLocationList: state.favoriteLocationList.map(
             (item) =>
-              item.location === location ? { ...item, alias: newAlias } : item // key 이름을 alias로 맞추는 것 확인 필요
+              item.location === location && newAlias.length > 0
+                ? { ...item, alias: newAlias }
+                : item // key 이름을 alias로 맞추는 것 확인 필요
           ),
         }));
       },
