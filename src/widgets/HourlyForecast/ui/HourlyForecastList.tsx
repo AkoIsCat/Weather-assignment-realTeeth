@@ -1,21 +1,10 @@
-import { HourlyForecast } from '../../../entities/weather/ui/HourlyForecast';
+import { HourlyForecast, type WeatherData } from '../../../entities/weather';
 
-type Props = {
-  time: number;
-  temp: number;
-  icon: string;
-};
-
-export const HourlyForecastList = ({ data }: { data: Props[] }) => {
+export const HourlyForecastList = ({ data }: { data: WeatherData[] }) => {
   return (
-    <div className="flex overflow-x-auto gap-5 lg:gap-10 scrollbar-hide px-6 pb-6">
-      {data.map((item) => (
-        <HourlyForecast
-          key={item.time}
-          time={item.time}
-          temp={item.temp}
-          icon={item.icon}
-        />
+    <div className="flex overflow-x-auto gap-5 lg:gap-10 scrollbar-hide px-6 pb-12">
+      {data?.map((item) => (
+        <HourlyForecast key={item.dt} data={item} />
       ))}
     </div>
   );

@@ -1,22 +1,25 @@
 import { Card } from '../../../shared';
+import { WeatherIcon } from '../../../shared';
+import { formatWeatherDateTime } from '..';
+import type { WeatherData } from '../model/types';
 
-// 임시타입
-type PropsType = {
-  time: number;
-  temp: number;
-  icon: string;
-};
+export const HourlyForecast = ({ data }: { data: WeatherData }) => {
+  const days = formatWeatherDateTime(data.dt);
 
-export const HourlyForecast = ({ time, temp, icon }: PropsType) => {
   return (
     <div className="flex flex-col justify-center items-center">
-      <p>{time}시</p>
+      <p>{days.time}</p>
       <Card width="hourlyItem" shadow="hourlyItem">
         <div className="flex flex-col justify-center items-center">
-          {/* <WeatherIcon icon={icon} description="WeatherIcon" /> */}
-          <p>{temp}°</p>
+          <WeatherIcon
+            icon={data.weather[0].icon}
+            description={data.weather[0].description}
+            width="hourly"
+          />
+          <p className="text-2xl mb-5">{Math.floor(data.temp)}°</p>
         </div>
       </Card>
+      <p>{days.date}</p>
     </div>
   );
 };

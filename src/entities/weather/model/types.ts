@@ -18,6 +18,7 @@ export type CurrentTmpType = {
 export type WeatherData = {
   dt: number;
   dt_txt: string;
+  temp: number;
   main: {
     temp: number;
   };
