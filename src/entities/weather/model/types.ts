@@ -17,10 +17,23 @@ export type CurrentTmpType = {
   curTmp: number;
 };
 
-export type WeatherData = {
+type CurrentWeatherDataType = {
   dt: number;
   dt_txt: string;
   temp: number;
+  weather: {
+    icon: string;
+    description: string;
+  }[];
+};
+
+type DailyANDHourlyWeatherType = {
+  dt: number;
+  dt_txt: string;
+  temp: {
+    min: number;
+    max: number;
+  };
   main: {
     temp: number;
   };
@@ -28,6 +41,12 @@ export type WeatherData = {
     icon: string;
     description: string;
   }[];
+};
+
+export type WeatherData = {
+  current: CurrentWeatherDataType;
+  daily: DailyANDHourlyWeatherType[];
+  hourly: DailyANDHourlyWeatherType[];
   // ... 기타 필드
 };
 
