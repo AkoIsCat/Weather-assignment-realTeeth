@@ -1,6 +1,10 @@
 import { useCoords } from '../../../entities/coords';
-import { useAddress, useAddressToCoords } from '../../../entities/address';
-import { useWeather } from '../../../entities/weather';
+import {
+  useAddress,
+  useAddressToCoords,
+  useParsedAddress,
+} from '../../../entities/address';
+import { useWeather, useWeatherDetail } from '../../../entities/weather';
 
 import { Card } from '../../../shared';
 import { SearchBar } from '../../../features/search';
@@ -32,27 +36,17 @@ export const MainPage = () => {
     if (location) {
       setCurrentLocation(location);
     }
-  }, [location, navigate, address, setCurrentLocation]);
+  }, [location, navigate, address?.address_name, setCurrentLocation]);
 
-  const lat = coordsData ? +coordsData?.documents[0].y : coords?.[0] ?? 0;
-  const lon = coordsData ? +coordsData?.documents[0].x : coords?.[1] ?? 0;
+  const lat = coordsData ? +coordsData.documents[0].y : coords?.[0] ?? 0;
+  const lon = coordsData ? +coordsData.documents[0].x : coords?.[1] ?? 0;
 
   const weather = useWeather(lat, lon);
+  const weatherDetail = useWeatherDetail(weather); // 정제된 데이터
+  const parsedAddress = useParsedAddress(currentLocation); // 정제된 주소
 
-  if (!weather) {
-    return (
-      <Card>
-        <p>해당 장소의 정보가 제공되지 않습니다.</p>
-      </Card>
-    );
-  }
-
-  const sliceLocation = currentLocation.split(' ');
-
-  const dailyTemp = {
-    minTmp: Math.floor(weather?.daily[0].temp.min),
-    maxTmp: Math.floor(weather?.daily[0].temp.max),
-  };
+  if (!weather || !weatherDetail)
+    return <Card>해당 장소의 정보가 제공되지 않습니다.</Card>;
 
   return (
     <main className="w-screen min-h-screen flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-0 lg:items-start box-border bg-[#F7F7FA]">
@@ -71,20 +65,12 @@ export const MainPage = () => {
 
       {/* 현재 날씨 */}
       <CurrentWeatherInfo
-        weatherIcon={{
-          icon: weather?.current.weather[0]?.icon,
-          description: weather?.current.weather[0]?.description,
-          width: 'current',
-        }}
+        weatherIcon={{ ...weatherDetail.condition, width: 'current' }}
         curTmp={Math.floor(weather?.current.temp)}
-        minTmp={dailyTemp.minTmp}
-        maxTmp={dailyTemp.maxTmp}
+        minTmp={weatherDetail?.minTmp}
+        maxTmp={weatherDetail?.maxTmp}
         currentLocation={currentLocation}
-        address={{
-          district: sliceLocation[1] ?? '',
-          neighborhood: sliceLocation[2] ?? '',
-          village: sliceLocation[3] ?? '',
-        }}
+        address={parsedAddress}
         lat={coordsData ? +coordsData?.documents[0].y : coords?.[0] ?? 0}
         lon={coordsData ? +coordsData?.documents[0].x : coords?.[1] ?? 0}
       />
