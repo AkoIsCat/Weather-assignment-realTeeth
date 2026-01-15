@@ -19,7 +19,7 @@ export const Card = ({
     favoriteItem: 'w-full p-5 lg:p-6',
     // 즐겨찾기 카드 아이템
     favoriteCard:
-      'w-[calc(50%-0.5rem)]  lg:w-[calc(16%-0.5rem)] p-5 lg:p-6  cursor-pointer',
+      'w-full lg:w-[calc(16%-0.5rem)] p-5 lg:p-6  cursor-pointer min-h-20',
 
     // 시간대별 기온 카드
     hourlyItem: 'w-[80px] lg:w-[90px] min-w-0 min-h-30',

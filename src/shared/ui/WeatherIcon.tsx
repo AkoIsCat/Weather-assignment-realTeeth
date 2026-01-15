@@ -5,12 +5,12 @@ export const WeatherIcon = ({ icon, description, width }: WeatherIconType) => {
 
   const widthCss = {
     hourly: 'w-[110px] h-[120px]',
-    favorite: '',
+    favorite: 'w-30 lg:w-25',
     current: 'w-full h-full',
   };
 
   return (
-    <div className="w-50 flex items-center justify-center leading-none">
+    <div className="flex items-center justify-center leading-none">
       <img
         src={iconUrl}
         alt={description}
