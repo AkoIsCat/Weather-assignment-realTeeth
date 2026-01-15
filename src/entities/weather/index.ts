@@ -11,7 +11,7 @@ export { useWeatherDetail } from './model/useWeatherDetail';
 // ./weather/ui
 export { TodayTmp } from './ui/TodayTmp';
 export { CurrentTmp } from './ui/CurrentTmp';
-export { HourlyForecast } from './ui/HourlyForecast';
+export { HourlyWeather } from './ui/HourlyWeather';
 
 // ./weather/lib
 export { formatWeatherDateTime } from './lib/formatWeatherDateTime';

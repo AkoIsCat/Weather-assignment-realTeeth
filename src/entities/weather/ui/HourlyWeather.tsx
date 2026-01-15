@@ -3,7 +3,7 @@ import { WeatherIcon } from '../../../shared';
 import { formatWeatherDateTime } from '..';
 import type { WeatherData } from '../model/types';
 
-export const HourlyForecast = ({ data }: { data: WeatherData }) => {
+export const HourlyWeather = ({ data }: { data: WeatherData }) => {
   const days = formatWeatherDateTime(data.dt);
 
   return (

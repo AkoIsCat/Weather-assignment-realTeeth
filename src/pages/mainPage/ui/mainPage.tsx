@@ -10,7 +10,7 @@ import { Card } from '../../../shared';
 import { SearchBar } from '../../../features/search';
 import { Logo } from '../../../shared';
 import { CurrentWeatherInfo } from '../../../widgets/CurrentWeatherInfo/ui/CurrentWeatherInfo';
-import { HourlyForecastSection } from '../../../widgets/HourlyForecast/ui/HourlyForecastSection';
+import { HourlyWeatherSection } from '../../../widgets/HourlyWeather';
 import { FavoriteSection } from '../../../widgets/FavoriteList';
 
 import { useSearchParams, useNavigate } from 'react-router-dom';
@@ -76,7 +76,7 @@ export const MainPage = () => {
       />
 
       {/* 시간대별 날씨 */}
-      <HourlyForecastSection data={weather?.hourly} />
+      <HourlyWeatherSection data={weather?.hourly} />
 
       {/* 즐겨찾기 */}
       <FavoriteSection />
