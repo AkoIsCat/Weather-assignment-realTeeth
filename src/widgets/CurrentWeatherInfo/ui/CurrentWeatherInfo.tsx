@@ -3,6 +3,7 @@ import { Card } from '../../../shared';
 import { CurrentLocation } from '../../../entities/address';
 import { CurrentWeather } from '../../../entities/weather/ui/CurrentWeather';
 import type { CurrentWeatherInfoType } from '../model/types';
+import { ToggleFavoriteButton } from '../../../features/favorite/ui/ToggleFavoriteButton';
 
 export const CurrentWeatherInfo = ({
   address,
@@ -11,9 +12,9 @@ export const CurrentWeatherInfo = ({
   minTmp,
   maxTmp,
   currentLocation,
+  lat,
+  lon,
 }: CurrentWeatherInfoType) => {
-  console.log(address, currentLocation);
-
   const alias = `${address.district ?? ''} ${address.neighborhood ?? ''} ${
     address.village ?? ''
   }`;
@@ -21,11 +22,8 @@ export const CurrentWeatherInfo = ({
   const favoriteData: FavoriteStateType = {
     location: currentLocation,
     alias,
-    curTmp,
-    minTmp,
-    maxTmp,
-    icon: weatherIcon.icon,
-    description: weatherIcon.description,
+    lat,
+    lon,
   };
 
   return (
@@ -36,6 +34,9 @@ export const CurrentWeatherInfo = ({
           neighborhood={address.neighborhood ?? ''}
           village={address.village ?? ''}
           favoriteWeatherData={favoriteData}
+          favoriteButtonSlot={
+            <ToggleFavoriteButton favoriteWeatherData={favoriteData} />
+          }
         />
         <CurrentWeather
           weatherIcon={{

@@ -8,11 +8,8 @@ export const FavoriteList = () => {
       key={item.location}
       location={item.location}
       alias={item.alias}
-      curTmp={item.curTmp}
-      minTmp={item.minTmp}
-      maxTmp={item.maxTmp}
-      icon={item.icon}
-      description={item.description}
+      lat={item.lat}
+      lon={item.lon}
     />
   ));
 };

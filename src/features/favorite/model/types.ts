@@ -11,9 +11,6 @@ export type FavoriteActios = {
 export type FavoriteStateType = {
   location: string;
   alias: string;
-  curTmp: number;
-  minTmp: number;
-  maxTmp: number;
-  icon: string;
-  description: string;
+  lat: number;
+  lon: number;
 };
