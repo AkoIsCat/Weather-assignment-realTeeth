@@ -1,6 +1,7 @@
+import type { FavoriteStateType } from '../../../features/favorite';
 import { Card } from '../../../shared';
-import { CurrentLocation } from '../../CurrentLocation';
-import { CurrentWeather } from '../../CurrentWeather/ui/CurrentWeather';
+import { CurrentLocation } from '../../../entities/address';
+import { CurrentWeather } from '../../../entities/weather/ui/CurrentWeather';
 import type { CurrentWeatherInfoType } from '../model/types';
 
 export const CurrentWeatherInfo = ({
@@ -9,14 +10,32 @@ export const CurrentWeatherInfo = ({
   curTmp,
   minTmp,
   maxTmp,
+  currentLocation,
 }: CurrentWeatherInfoType) => {
-  return (  
+  console.log(address, currentLocation);
+
+  const alias = `${address.district ?? ''} ${address.neighborhood ?? ''} ${
+    address.village ?? ''
+  }`;
+
+  const favoriteData: FavoriteStateType = {
+    location: currentLocation,
+    alias,
+    curTmp,
+    minTmp,
+    maxTmp,
+    icon: weatherIcon.icon,
+    description: weatherIcon.description,
+  };
+
+  return (
     <section className="lg:col-span-4 px-4 lg:px-10">
       <Card width="currentDesktop">
         <CurrentLocation
           district={address.district ?? ''}
           neighborhood={address.neighborhood ?? ''}
           village={address.village ?? ''}
+          favoriteWeatherData={favoriteData}
         />
         <CurrentWeather
           weatherIcon={{
