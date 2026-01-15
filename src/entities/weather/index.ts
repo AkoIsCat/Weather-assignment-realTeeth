@@ -5,6 +5,7 @@ export { getWeather } from './api/getWeather';
 export { useWeather } from './model/useWeather';
 export { useWeatherStore } from './model/useWeatherStore';
 export type { WeatherData } from './model/types';
+export type { CurrentWeatherType } from './model/types';
 
 // ./weather/ui
 export { TodayTmp } from './ui/TodayTmp';

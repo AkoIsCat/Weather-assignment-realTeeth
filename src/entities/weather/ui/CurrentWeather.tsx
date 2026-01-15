@@ -1,6 +1,6 @@
 import { WeatherIcon } from '../../../shared';
-import type { CurrentWeatherType } from '../model/types';
-import { CurrentTmp, TodayTmp } from '../../../entities/weather';
+import type { CurrentWeatherType } from '..';
+import { CurrentTmp, TodayTmp } from '..';
 
 export const CurrentWeather = ({
   weatherIcon,
@@ -15,6 +15,7 @@ export const CurrentWeather = ({
           <WeatherIcon
             icon={weatherIcon.icon}
             description={weatherIcon.description}
+            width="current"
           />
         </div>
         <CurrentTmp curTmp={curTmp} />
