@@ -11,7 +11,7 @@ export const getCoords = () => {
       },
       (error) => {
         console.warn(
-          '위치 정보를 가져올 수 없어 강남구 좌표를 반환합니다.',
+          '위치 정보를 가져올 수 없어 초기 위치를 임의 지정합니다.',
           error.message
         );
         res([37.4979, 127.0276]);
