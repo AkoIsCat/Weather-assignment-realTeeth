@@ -6,6 +6,7 @@ export const useWeather = (lat: number, lon: number) => {
     queryKey: ['weather', lat, lon],
     queryFn: () => getWeather({ lat: lat, lon: lon }),
     enabled: typeof lat === 'number' && typeof lon === 'number',
+    staleTime: 5 * 60 * 1000,
   });
   return data;
 };
