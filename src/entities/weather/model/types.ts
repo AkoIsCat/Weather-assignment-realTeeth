@@ -44,6 +44,12 @@ type DailyANDHourlyWeatherType = {
 };
 
 export type WeatherData = {
+  dt: number;
+  temp: number;
+  weather: {
+    icon: string;
+    description: string;
+  }[];
   current: CurrentWeatherDataType;
   daily: DailyANDHourlyWeatherType[];
   hourly: DailyANDHourlyWeatherType[];
