@@ -2,7 +2,7 @@ import { SearchIcon } from '../../../shared';
 import { SearchSuggestionList } from './SearchSuggestionList';
 import { useState, useRef, useEffect } from 'react';
 import { korea_districts } from '../../../entities/address';
-import { SearchInput } from '../../../entities/search/ui/SearchInput';
+import { SearchInput } from './SearchInput';
 
 export const SearchBar = () => {
   const [isOpen, setIsOpen] = useState(false);
