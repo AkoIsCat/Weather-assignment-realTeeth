@@ -1,5 +1,5 @@
 export const getAddress = (data: [number, number]) => {
-  const [lat, lng] = data;
+  const [lat, lon] = data;
   const { kakao } = window;
 
   return new Promise<kakao.maps.services.RegionCode[]>((res, rej) => {
@@ -20,7 +20,7 @@ export const getAddress = (data: [number, number]) => {
         rej(new Error('coord2RegionCode failed'));
       }
     };
-    // x = 경도(lng), y = 위도(lat)
-    geocoder.coord2RegionCode(lng, lat, callback);
+    // x = 경도(lon), y = 위도(lat)
+    geocoder.coord2RegionCode(lon, lat, callback);
   });
 };

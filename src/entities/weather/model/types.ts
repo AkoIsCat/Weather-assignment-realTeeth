@@ -2,7 +2,7 @@ import type { WeatherIconType } from '../../../shared';
 
 export type WeatherProps = {
   lat: number;
-  lng: number;
+  lon: number;
 };
 
 export type Coords = [number, number] | undefined;
