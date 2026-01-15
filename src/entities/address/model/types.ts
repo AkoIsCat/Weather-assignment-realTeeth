@@ -8,4 +8,5 @@ export type AddressType = {
 
 export type CurrentLocationProps = AddressType & {
   favoriteWeatherData: FavoriteStateType;
+  favoriteButtonSlot: React.ReactNode;
 };
