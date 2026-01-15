@@ -6,6 +6,7 @@ import {
 } from '../../../entities/address';
 import { useWeather, useWeatherDetail } from '../../../entities/weather';
 
+import { Card } from '../../../shared';
 import { SearchBar } from '../../../features/search';
 import { Logo } from '../../../shared';
 import { CurrentWeatherInfo } from '../../../widgets/CurrentWeatherInfo/ui/CurrentWeatherInfo';
@@ -20,7 +21,7 @@ import { useWeatherStore } from '../../../entities/weather';
 
 export const MainPage = () => {
   const coords = useCoords();
-  const address = useAddress(coords);
+  const { address, isAddressError } = useAddress(coords);
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -29,7 +30,7 @@ export const MainPage = () => {
   const coordsData = useAddressToCoords(location || '');
 
   useEffect(() => {
-    if (!location && address?.address_name) {
+    if (!location && address) {
       navigate(`/?location=${address.address_name}`);
       setCurrentLocation(address.address_name);
     }
@@ -37,10 +38,15 @@ export const MainPage = () => {
     if (location) {
       setCurrentLocation(location);
     }
-  }, [location, navigate, address?.address_name, setCurrentLocation]);
+  }, [location, navigate, address, setCurrentLocation]);
+  console.log(address, isAddressError);
 
-  const lat = coordsData ? +coordsData.documents[0].y : coords?.[0] ?? 0;
-  const lon = coordsData ? +coordsData.documents[0].x : coords?.[1] ?? 0;
+  const lat = coordsData?.documents?.[0]
+    ? +coordsData.documents[0].y
+    : coords?.[0] ?? 0;
+  const lon = coordsData?.documents?.[0]
+    ? +coordsData.documents[0].x
+    : coords?.[1] ?? 0;
 
   const weather = useWeather(lat, lon);
   const weatherDetail = useWeatherDetail(weather); // 정제된 데이터
@@ -55,38 +61,47 @@ export const MainPage = () => {
         <header className="lg:col-span-3 px-4 pt-3 lg:px-10">
           <Logo />
         </header>
-
         {/* 검색바 */}
         <section className="border-y border-[#E9E9E9] py-3 lg:col-span-6 lg:border-none lg:py-0 lg:pt-4 isolate z-50">
           <SearchBar />
         </section>
       </div>
-
+      {isAddressError && (
+        <div className="w-125 lg:ml-162.5">
+          <Card width="favoriteItem">
+            <p>해당 장소의 정보가 제공되지 않습니다.</p>
+          </Card>
+        </div>
+      )}
       {/* 현재 날씨 */}
-      {!weatherDetail ? (
-        <CurrentWeatherInfoSkeleton />
-      ) : (
-        <CurrentWeatherInfo
-          weatherIcon={{ ...weatherDetail.condition, width: 'current' }}
-          curTmp={Math.floor(weather?.current.temp)}
-          minTmp={weatherDetail?.minTmp ?? 0}
-          maxTmp={weatherDetail?.maxTmp ?? 0}
-          currentLocation={currentLocation}
-          address={parsedAddress}
-          lat={coordsData ? +coordsData?.documents[0].y : coords?.[0] ?? 0}
-          lon={coordsData ? +coordsData?.documents[0].x : coords?.[1] ?? 0}
-        />
-      )}
+      {!isAddressError && (
+        <>
+          {!weatherDetail ? (
+            <CurrentWeatherInfoSkeleton />
+          ) : (
+            <CurrentWeatherInfo
+              weatherIcon={{ ...weatherDetail.condition, width: 'current' }}
+              curTmp={Math.floor(weather?.current.temp)}
+              minTmp={weatherDetail?.minTmp ?? 0}
+              maxTmp={weatherDetail?.maxTmp ?? 0}
+              currentLocation={currentLocation}
+              address={parsedAddress}
+              lat={lat}
+              lon={lon}
+            />
+          )}
 
-      {/* 시간대별 날씨 */}
-      {isLoading ? (
-        <HourlyWeatherSkeleton />
-      ) : (
-        <HourlyWeatherSection data={weather?.hourly} />
-      )}
+          {/* 시간대별 날씨 */}
+          {isLoading ? (
+            <HourlyWeatherSkeleton />
+          ) : (
+            <HourlyWeatherSection data={weather?.hourly} />
+          )}
 
-      {/* 즐겨찾기 */}
-      <FavoriteSection isLoading={isLoading} />
+          {/* 즐겨찾기 */}
+          <FavoriteSection isLoading={isLoading} />
+        </>
+      )}
     </main>
   );
 };
