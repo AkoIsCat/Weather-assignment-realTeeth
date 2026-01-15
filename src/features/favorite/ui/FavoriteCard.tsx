@@ -1,38 +1,47 @@
 import { WeatherIcon } from '../../../shared';
 import { CurrentTmp } from '../../../entities/weather';
 import { Card } from '../../../shared';
+import { PencilIcon } from '../../../shared';
 import { useNavigate } from 'react-router-dom';
+import type { FavoriteStateType } from '../model/types';
 
-// 임시 타입. 나중에 실제 데이터에 맞춰서 바꿀것.
-type PropsType = {
-  city: string;
-  curTmp: number;
-  minTmp: number;
-  maxTmp: number;
-};
 
-export const FavoriteCard = ({ city, curTmp, minTmp, maxTmp }: PropsType) => {
+export const FavoriteCard = ({
+  location,
+  alias,
+  curTmp,
+  minTmp,
+  maxTmp,
+  icon,
+  description,
+}: FavoriteStateType) => {
   const navigate = useNavigate();
+
+  const onClickEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log(e, 'click');
+  };
 
   return (
     <Card width="favoriteCard">
       <div
-        className="flex"
+        className="flex justify-between"
         onClick={() => {
-          navigate(`/?location=${city}`);
+          navigate(`/?location=${location}`);
         }}
       >
-        <div>
-          <p>{city}</p>
+        <div className="flex flex-col gap-3 lg:gap-0">
+          <div className="flex items-center gap-2">
+            <p className="text-lg">{alias}</p>
+            <PencilIcon onClick={onClickEdit} />
+          </div>
           <CurrentTmp curTmp={curTmp} />
         </div>
-        {/* <WeatherIcon icon="icon" description="dummy" /> */}
+        <WeatherIcon icon={icon} description={description} width="favorite" />
       </div>
       <div className="flex gap-2 text-xs">
-        <span>최고 {maxTmp} |</span>
-        <span>최저 {minTmp}</span>
-        {/* <TodayTmp type="max" minTmp={maxTmp} />
-        <TodayTmp type="min" minTmp={minTmp} /> */}
+        <span>최고 {maxTmp}° |</span>
+        <span>최저 {minTmp}°</span>
       </div>
     </Card>
   );
