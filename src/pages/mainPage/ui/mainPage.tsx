@@ -1,18 +1,13 @@
 import { useCoords } from '../../../entities/coords';
 import { useAddress } from '../../../entities/address';
-import {
-  useForecast,
-  useWeather,
-  type WeatherData,
-} from '../../../entities/weather';
-import { formatToKST, filterWeatherData } from '../../../entities/weather';
+import { useWeather } from '../../../entities/weather';
 
 import { Card } from '../../../shared';
 import { SearchBar } from '../../../features/search';
 import { Logo } from '../../../shared';
 import { CurrentWeatherInfo } from '../../../widgets/CurrentWeatherInfo/ui/CurrentWeatherInfo';
-import { FavoriteList } from '../../../widgets/FavoriteList';
 import { HourlyForecastSection } from '../../../widgets/HourlyForecast/ui/HourlyForecastSection';
+import { FavoriteList } from '../../../widgets/FavoriteList';
 
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -22,7 +17,6 @@ export const MainPage = () => {
   const coords = useCoords();
   const address = useAddress(coords);
   const weather = useWeather(coords);
-  const forecast = useForecast(coords);
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -42,20 +36,11 @@ export const MainPage = () => {
     }
   }, [location, navigate, address, setCurrentLocation]);
 
-  console.log(weather, forecast, address);
-
-  const filtered = forecast && filterWeatherData(forecast.list);
-  console.log('filter', filtered);
-  const result =
-    filtered &&
-    filtered.map((item: WeatherData) => ({
-      days: formatToKST(item.dt).split('.').slice(1, 3).join('/').trim(),
-      time: formatToKST(item.dt).split('.').slice(3).join('').trim(),
-      temp: item.main.temp,
-      weatherIcon: item.weather[0].icon,
-      weatherDescription: item.weather[0].description,
-    }));
-  console.log('result', result);
+  const dailyTemp = {
+    minTemp: Math.floor(weather?.daily[0].temp.min),
+    maxTemp: Math.floor(weather?.daily[0].temp.max),
+  };
+  console.log(weather, address, dailyTemp);
 
   return (
     <main className="w-screen min-h-screen flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-0 lg:items-start box-border bg-[#F7F7FA]">
@@ -75,12 +60,13 @@ export const MainPage = () => {
       {/* 현재 날씨 */}
       <CurrentWeatherInfo
         weatherIcon={{
-          icon: weather?.weather[0]?.icon,
-          description: weather?.weather[0]?.description,
+          icon: weather?.current.weather[0]?.icon,
+          description: weather?.current.weather[0]?.description,
+          width: 'current',
         }}
-        curTmp={Math.floor(weather?.main.temp)}
-        minTmp={-1}
-        maxTmp={10}
+        curTmp={Math.floor(weather?.current.temp)}
+        minTmp={dailyTemp.minTemp}
+        maxTmp={dailyTemp.maxTemp}
         address={{
           district: sliceLocation[1] ?? '',
           neighborhood: sliceLocation[2] ?? '',
@@ -89,7 +75,7 @@ export const MainPage = () => {
       />
 
       {/* 시간대별 날씨 */}
-      <HourlyForecastSection />
+      <HourlyForecastSection data={weather?.hourly} />
 
       {/* 즐겨찾기 */}
       <section className="lg:col-span-12 px-4 pb-4 lg:px-10">
