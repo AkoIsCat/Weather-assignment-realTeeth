@@ -3,6 +3,7 @@ import { SearchSuggestionList } from './SearchSuggestionList';
 import { useState, useRef, useEffect } from 'react';
 import { korea_districts } from '../../../entities/address';
 import { SearchInput } from './SearchInput';
+import { useMemo } from 'react';
 
 export const SearchBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,8 +11,9 @@ export const SearchBar = () => {
   const itemRef = useRef<HTMLDivElement>(null);
 
   const isValidSearch = searchValue.trim().length > 0;
-  const filterLocation = korea_districts.filter((item) =>
-    item.includes(searchValue)
+  const filterLocation = useMemo(
+    () => korea_districts.filter((item) => item.includes(searchValue)),
+    [searchValue]
   );
 
   useEffect(() => {
@@ -44,7 +46,11 @@ export const SearchBar = () => {
         />
         {isValidSearch && isOpen && (
           <div className="absolute left-0 right-0 top-full z-20">
-            <SearchSuggestionList data={filterLocation} setIsOpen={setIsOpen} setSearchValue={setSearchValue} />
+            <SearchSuggestionList
+              data={filterLocation}
+              setIsOpen={setIsOpen}
+              setSearchValue={setSearchValue}
+            />
           </div>
         )}
       </div>
