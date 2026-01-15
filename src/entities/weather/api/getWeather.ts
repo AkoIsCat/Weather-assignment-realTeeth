@@ -2,7 +2,7 @@ import type { WeatherProps } from '../model/types';
 
 export const getWeather = async ({ lat, lng }: WeatherProps) => {
   const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${
+    `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lng}&appid=${
       import.meta.env.VITE_OPENWEATHERMAP_KEY
     }&units=metric`
   );
