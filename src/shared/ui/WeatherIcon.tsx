@@ -1,7 +1,8 @@
+import { getWeatherIcon } from '../model/getWeatherIcon';
 import type { WeatherIconType } from '../model/types';
 
 export const WeatherIcon = ({ icon, description, width }: WeatherIconType) => {
-  const iconUrl = `http://openweathermap.org/img/wn/${icon}@4x.png`;
+  const customIconPath = getWeatherIcon(icon);
 
   const widthCss = {
     hourly: 'w-[110px] h-[120px]',
@@ -12,7 +13,7 @@ export const WeatherIcon = ({ icon, description, width }: WeatherIconType) => {
   return (
     <div className="flex items-center justify-center leading-none">
       <img
-        src={iconUrl}
+        src={customIconPath}
         alt={description}
         className={`block ${widthCss[width]} object-contain -mb-4`}
       />
