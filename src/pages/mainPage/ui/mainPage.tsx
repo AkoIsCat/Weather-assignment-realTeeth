@@ -6,12 +6,13 @@ import {
 } from '../../../entities/address';
 import { useWeather, useWeatherDetail } from '../../../entities/weather';
 
-import { Card } from '../../../shared';
 import { SearchBar } from '../../../features/search';
 import { Logo } from '../../../shared';
 import { CurrentWeatherInfo } from '../../../widgets/CurrentWeatherInfo/ui/CurrentWeatherInfo';
 import { HourlyWeatherSection } from '../../../widgets/HourlyWeather';
 import { FavoriteSection } from '../../../widgets/FavoriteList';
+import { CurrentWeatherInfoSkeleton } from '../../../widgets/CurrentWeatherInfo';
+import { HourlyWeatherSkeleton } from '../../../widgets/HourlyWeather';
 
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -44,9 +45,7 @@ export const MainPage = () => {
   const weather = useWeather(lat, lon);
   const weatherDetail = useWeatherDetail(weather); // 정제된 데이터
   const parsedAddress = useParsedAddress(currentLocation); // 정제된 주소
-
-  if (!weather || !weatherDetail)
-    return <Card>해당 장소의 정보가 제공되지 않습니다.</Card>;
+  const isLoading = !weather; // weather가 없으면 로딩 중으로 판단
 
   return (
     <main className="w-screen min-h-screen flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-0 lg:items-start box-border bg-[#F7F7FA]">
@@ -64,22 +63,30 @@ export const MainPage = () => {
       </div>
 
       {/* 현재 날씨 */}
-      <CurrentWeatherInfo
-        weatherIcon={{ ...weatherDetail.condition, width: 'current' }}
-        curTmp={Math.floor(weather?.current.temp)}
-        minTmp={weatherDetail?.minTmp}
-        maxTmp={weatherDetail?.maxTmp}
-        currentLocation={currentLocation}
-        address={parsedAddress}
-        lat={coordsData ? +coordsData?.documents[0].y : coords?.[0] ?? 0}
-        lon={coordsData ? +coordsData?.documents[0].x : coords?.[1] ?? 0}
-      />
+      {!weatherDetail ? (
+        <CurrentWeatherInfoSkeleton />
+      ) : (
+        <CurrentWeatherInfo
+          weatherIcon={{ ...weatherDetail.condition, width: 'current' }}
+          curTmp={Math.floor(weather?.current.temp)}
+          minTmp={weatherDetail?.minTmp ?? 0}
+          maxTmp={weatherDetail?.maxTmp ?? 0}
+          currentLocation={currentLocation}
+          address={parsedAddress}
+          lat={coordsData ? +coordsData?.documents[0].y : coords?.[0] ?? 0}
+          lon={coordsData ? +coordsData?.documents[0].x : coords?.[1] ?? 0}
+        />
+      )}
 
       {/* 시간대별 날씨 */}
-      <HourlyWeatherSection data={weather?.hourly} />
+      {isLoading ? (
+        <HourlyWeatherSkeleton />
+      ) : (
+        <HourlyWeatherSection data={weather?.hourly} />
+      )}
 
       {/* 즐겨찾기 */}
-      <FavoriteSection />
+      <FavoriteSection isLoading={isLoading} />
     </main>
   );
 };

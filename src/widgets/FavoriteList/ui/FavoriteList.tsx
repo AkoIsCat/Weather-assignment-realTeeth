@@ -1,9 +1,23 @@
 import { FavoriteCard } from '../../../features/favorite';
 import { useFavoriteStore } from '../../../features/favorite';
 import { Card } from '../../../shared';
+import { FavoriteCardSkeleton } from '../../../features/favorite';
 
-export const FavoriteList = () => {
+export const FavoriteList = ({ isLoading }: { isLoading: boolean }) => {
   const { favoriteLocationList } = useFavoriteStore();
+
+  // 로딩 중일 때 3개 정도의 스켈레톤 표시
+  if (isLoading) {
+    return (
+      <>
+        {Array(3)
+          .fill(0)
+          .map((_, i) => (
+            <FavoriteCardSkeleton key={i} />
+          ))}
+      </>
+    );
+  }
 
   if (favoriteLocationList.length === 0) {
     return (
